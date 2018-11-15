@@ -68,13 +68,7 @@ namespace Opm {
             typedef AquiferCarterTracy<TypeTag> AquiferCarterTracy_object;
             typedef AquiferFetkovich<TypeTag> AquiferFetkovich_object;
 
-            explicit BlackoilAquiferModel(Simulator& ebosSimulator);
-
-            // TODO: declaring this as mutable is a hack which should be fixed in the
-            // long term
-            mutable std::vector<AquiferType> aquifers_;
-
-            Simulator& ebosSimulator_;
+            Simulator& simulator_;
 
             std::vector<AquiferCarterTracy_object> aquifers_CarterTracy;
             std::vector<AquiferFetkovich_object> aquifers_Fetkovich;
