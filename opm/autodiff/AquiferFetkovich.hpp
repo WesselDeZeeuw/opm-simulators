@@ -186,8 +186,8 @@ namespace Opm
       inline Scalar dpai(int idx)
       {
         Scalar dp = aquifer_pressure_ - pressure_previous_.at(idx)+ rhow_.at(idx).value()*gravity_()*(cell_depth_.at(idx) - aqufetp_data_.d0) ;
-        std::cout << "Qu =" << idx << " IndexNumber " << std::endl;
-        std::cout << "Qu =" <<  pressure_previous_.at(idx) << " Pressure Previous at Index Number" << std::endl;
+        //std::cout << "Qu =" << idx << " IndexNumber " << std::endl;
+        //std::cout << "Qu =" <<  pressure_previous_.at(idx) << " Pressure Previous at Index Number" << std::endl;
         //std::cout << "Qu =" <<  pressure_current_.at(idx).value() << " Pressure Current at Index Number" << std::endl;
         //std::cout << "Qu =" <<  rhow_.at(idx).value() << " rho at  Index Number" << std::endl;
         //std::cout << "Qu =" <<  cell_depth_.at(idx) << " Cell depth at  Index Number" << std::endl;
@@ -210,9 +210,9 @@ namespace Opm
         Scalar exp_ = (1 - exp(-td_Tc_)) / td_Tc_;
         Qai_.at(idx) = alphai_.at(idx) * aqufetp_data_.J * dpai(idx) * exp_;
         //std::cout << "Qu =" << idx << " IndexNumber " << std::endl;
-        std::cout << "Qu =" << dpai(idx) << " Pressure Difference at Index Number" << std::endl;
-        std::cout << "Qu =" << exp_ << " Exponential Constant " << std::endl;
-        std::cout << "Qu =" << Qai_.at(idx) << " Inflow at Index Number" << std::endl;
+        //std::cout << "Qu =" << dpai(idx) << " Pressure Difference at Index Number" << std::endl;
+        //std::cout << "Qu =" << exp_ << " Exponential Constant " << std::endl;
+        //std::cout << "Qu =" << Qai_.at(idx) << " Inflow at Index Number" << std::endl;
       }
 
       // This function is used to initialize and calculate the alpha_i for each grid connection to the aquifer
@@ -244,8 +244,10 @@ namespace Opm
 
         // denom_face_areas is the sum of the areas connected to an aquifer
         Scalar denom_face_areas = 0.;
+        cellToConnectionIdx_.resize(ebos_simulator_.gridView().size(/*codim=*/0), -1);
         for (size_t idx = 0; idx < cell_idx_.size(); ++idx)
         {
+          cellToConnectionIdx_[cell_idx_[idx]] = idx;
           auto cellFacesRange = cell2Faces[cell_idx_.at(idx)];
 
           for(auto cellFaceIter = cellFacesRange.begin(); cellFaceIter != cellFacesRange.end(); ++cellFaceIter)
